@@ -1,0 +1,78 @@
+
+<!-- Page header -->
+    <div class="page-header">
+        <h1>WorkLog <small>(<%=@count %> logs)</small></h1>
+    </div>
+<!-- /Page header -->
+
+<!-- The form-->
+<%=form_for :log, url: logs_path do |f| %>
+	
+	<div class="form-group">
+		<%=f.text_field :title, class: "form-control",  placeholder: "Type the title of your log here ..."%>
+	</div>
+	<div class="input-body">
+	<div class="form-group input-body">
+		<%=f.text_area :body, class: "form-control", placeholder: "Type description here..."%>
+	</div>
+
+    
+	<%= f.submit  class: "btn btn-lg btn-primary pull-right", style: "margin-bottom:10px" do %><i class="glyphicon glyphicon-thumbs-up"></i><%end%>
+	</div>
+<%end%>
+<!-- /The form-->
+
+<!-- Timeline -->
+<div class="timeline">
+	
+    
+    <div class="line text-muted"></div>
+
+
+	<% @logs.each do |log|%>
+		<!-- Separator -->
+	        <div class="separator"></div>
+        <!-- /Separator -->
+	 <!-- Panel -->
+        <article class="panel panel-primary panel-outline">
+    
+            <!-- Icon -->
+            <div class="panel-heading icon">
+                <i class="glyphicon glyphicon-thumbs-up"></i>
+            </div>
+            <!-- /Icon -->
+    
+            
+                <h2 class="panel-title">#<%=log.id%>: <%=log.title.split.map(&:capitalize).join(' ')%></h2>
+            <!-- /Heading -->
+    
+            <!-- Body -->
+            <div class="panel-body">
+               <%=log.body.capitalize%><br/>
+               <small class="pull-right"><%=time_ago_in_words(log.created_at)%> ago | <%= link_to 'Delete log', log, method: :delete, data: { confirm: 'Are you sure?' }, class: ""%></small>
+            
+			 
+            </div>
+            <!-- /Body -->
+    
+            <!-- Footer -->
+            <div class="panel-footer">
+              blablabla
+				<small class="pull-right"><%=time_ago_in_words(log.created_at)%> ago
+				 </small>
+
+            </div>
+            <!-- /Footer -->
+    
+        </article>
+        <!-- /Panel -->        
+	<%end%>
+		<!-- Separator -->
+	        <div class="separator"></div>
+        <!-- /Separator -->
+
+</div>
+<!-- /Timeline -->
+<!--Pagination-->
+<%= will_paginate @logs, previous_label: h("<"), next_label: h(">") %>
+<!--/Pagination-->
