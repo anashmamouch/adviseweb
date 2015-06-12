@@ -49,7 +49,7 @@
             <!-- Body -->
             <div class="panel-body">
                <%=log.body.capitalize%><br/>
-               <small class="pull-right"><%=time_ago_in_words(log.created_at)%> ago | <%= link_to 'Delete log', log, method: :delete, data: { confirm: 'Are you sure?' }, class: ""%></small>
+               <small class="pull-right"><%=time_ago_in_words(log.created_at)%> ago | <%= link_to 'Delete log', log, method: :delete, data: { confirm: 'Are you sure?' }%></small>
             
 			 
             </div>

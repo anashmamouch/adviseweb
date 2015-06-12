@@ -2,17 +2,13 @@ class LogsController < ApplicationController
 
 	def index
 		@logs = Log.paginate(:page => params[:page],:per_page => 10).order('created_at DESC')
-		expires_in 5.minutes, public: true
+		#expires_in 5.minutes, public: true
 		@count = Log.count
 
-		fresh_when last_modified: @logs.maximum(:updated_at)
+		fresh_when @logs
 		fresh_when @count
 	end
 	
-	def show
-		@log = Log.find(params[:id])
-		fresh_when @log
-	end
 	
 	def create
 		@log = Log.new(log_params)
@@ -22,12 +18,16 @@ class LogsController < ApplicationController
 	end
 
 	def show
-		@log = Log.find(params[:id])
-		@log.destroy
+		#@log = Log.find(params[:id])
+		
+		Log.find(params[:id]).destroy
+		
 		redirect_to root_url
 	end
 	
 	def destroy
+		Log.find(params[:id]).destroy
+		
 		redirect_to root_url
 	end
 
