@@ -1,5 +1,6 @@
 class LogsController < ApplicationController
 
+	
 	def index
 		@logs = Log.paginate(:page => params[:page],:per_page => 10).order('created_at DESC')
 		#expires_in 5.minutes, public: true
@@ -7,6 +8,12 @@ class LogsController < ApplicationController
 
 		fresh_when @logs
 		fresh_when @count
+
+		respond_to do |format|
+			  format.html
+			  format.json { render json: @logs }
+		end
+
 	end
 	
 	
@@ -18,11 +25,15 @@ class LogsController < ApplicationController
 	end
 
 	def show
-		#@log = Log.find(params[:id])
+		@log = Log.find(params[:id])
+
+		respond_to do |format|
+			  format.html { @log.destroy ; redirect_to root_url}
+			  format.json { render json: @log }
+		end
+		#Log.find(params[:id]).destroy
 		
-		Log.find(params[:id]).destroy
 		
-		redirect_to root_url
 	end
 	
 	def destroy
