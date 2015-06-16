@@ -10,8 +10,8 @@ class LogsController < ApplicationController
 		fresh_when @count
 
 		respond_to do |format|
-			  format.html
-			  format.json { render json: @logs }
+			  format.html  
+			  format.json { @all_logs = Log.all ; render json: @all_logs }
 		end
 
 	end
@@ -28,7 +28,7 @@ class LogsController < ApplicationController
 		@log = Log.find(params[:id])
 
 		respond_to do |format|
-			  format.html { @log.destroy ; redirect_to root_url}
+			  format.html { @log.destroy ; redirect_to root_url and return}
 			  format.json { render json: @log }
 		end
 		#Log.find(params[:id]).destroy
