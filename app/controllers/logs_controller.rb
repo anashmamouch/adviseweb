@@ -1,26 +1,25 @@
 class LogsController < ApplicationController
+#before_filter :authenticate_user!, only: [:create, :destroy]
 
-	
 	def index
 		@logs = Log.paginate(:page => params[:page],:per_page => 10).order('created_at DESC')
 		#expires_in 5.minutes, public: true
 		@count = Log.count
 
-		fresh_when @logs
-		fresh_when @count
+		#fresh_when @logs
+		#fresh_when @count
 
 		respond_to do |format|
-			  format.html  
+			  format.html
 			  format.json { @all_logs = Log.all ; render json: @all_logs }
 		end
 
 	end
-	
-	
+
 	def create
+
 		@log = Log.new(log_params)
 		@log.save
-
 		redirect_to root_url
 	end
 
@@ -32,13 +31,13 @@ class LogsController < ApplicationController
 			  format.json { render json: @log }
 		end
 		#Log.find(params[:id]).destroy
-		
-		
+
+
 	end
-	
+
 	def destroy
 		Log.find(params[:id]).destroy
-		
+
 		redirect_to root_url
 	end
 

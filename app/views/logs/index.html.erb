@@ -1,71 +1,71 @@
 
 <!-- Page header -->
     <div class="page-header">
-        <h1>WorkLog <small>(<%=@count %> logs)</small></h1>
+        <h1>Fiches Conseils <small>(<%=@count %> conseils)</small></h1>
     </div>
 <!-- /Page header -->
 
 <!-- The form-->
 <%=form_for :log, url: logs_path do |f| %>
-	
+
 	<div class="form-group">
-		<%=f.text_field :title, class: "form-control",  placeholder: "Type the title of your log here ..."%>
+		<%=f.text_field :title, class: "form-control",  placeholder: "Entrer le titre de la fiche conseil ici ..."%>
 	</div>
 	<div class="input-body">
 	<div class="form-group input-body">
-		<%=f.text_area :body, class: "form-control", placeholder: "Type description here..."%>
+		<%=f.text_area :body, class: "form-control", placeholder: "Entrer la description de la fiche conseil ici..."%>
 	</div>
 
-    
-	<%= f.submit  class: "btn btn-lg btn-primary pull-right", style: "margin-bottom:10px" do %><i class="glyphicon glyphicon-thumbs-up"></i><%end%>
+
+	<%= f.submit "Enregistrer",  class: "btn btn-lg btn-primary pull-right", style: "margin-bottom:10px" do %><i class="glyphicon glyphicon-thumbs-up"></i><%end%>
 	</div>
 <%end%>
 <!-- /The form-->
 
 <!-- Timeline -->
 <div class="timeline">
-	
-    
+
+
     <div class="line text-muted"></div>
 
-
+    <%@size = @logs.size %>
 	<% @logs.each do |log|%>
 		<!-- Separator -->
 	        <div class="separator"></div>
         <!-- /Separator -->
 	 <!-- Panel -->
         <article class="panel panel-primary panel-outline">
-    
+
             <!-- Icon -->
             <div class="panel-heading icon">
                 <i class="glyphicon glyphicon-thumbs-up"></i>
             </div>
             <!-- /Icon -->
-    
-            
-                <h2 class="panel-title">#<%=log.id%>: <%=log.title.split.map(&:capitalize).join(' ')%></h2>
+
+
+                <h2 class="panel-title">#<%=@size%>: <%=log.title.split.map(&:capitalize).join(' ')%></h2>
             <!-- /Heading -->
-    
+              <%@size = @size - 1 %>
             <!-- Body -->
             <div class="panel-body">
                <%=log.body.capitalize%><br/>
-               <small class="pull-right"><%=time_ago_in_words(log.created_at)%> ago | <%= link_to 'Delete log', log, method: :delete, data: { confirm: 'Are you sure?' }%></small>
-            
-			 
+               <small class="pull-right">crée le <%=log.created_at.strftime("%d/%m/%Y")%> à <%=log.created_at.strftime("%H:%M")%> | <%= link_to 'Effacer la fiche', log, method: :delete, data: { confirm: 'Are you sure?' }%></small>
+
+
             </div>
             <!-- /Body -->
-    
+
             <!-- Footer -->
             <div class="panel-footer">
               blablabla
-				<small class="pull-right"><%=time_ago_in_words(log.created_at)%> ago
+				<small class="pull-right"><%= time_ago_in_words(log.created_at)%>
 				 </small>
 
             </div>
             <!-- /Footer -->
-    
+
         </article>
-        <!-- /Panel -->        
+        <!-- /Panel -->
 	<%end%>
 		<!-- Separator -->
 	        <div class="separator"></div>
