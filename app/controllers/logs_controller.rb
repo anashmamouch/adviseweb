@@ -1,5 +1,5 @@
 class LogsController < ApplicationController
-#before_filter :authenticate_user!, only: [:create, :destroy]
+	before_action :authenticate_user!, only: [:create, :destroy]
 
 	def index
 		@logs = Log.paginate(:page => params[:page],:per_page => 10).order('created_at DESC')
